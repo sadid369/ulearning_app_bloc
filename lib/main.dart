@@ -2,9 +2,11 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ulearning_app/app_blocs.dart';
-import 'package:ulearning_app/app_events.dart';
-import 'package:ulearning_app/app_state.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ulearning_app/home_page.dart';
+import 'package:ulearning_app/pages/sign_in/sign_in.dart';
+import 'package:ulearning_app/pages/welcome/bloc/welcome_bloc_bloc.dart';
+import 'package:ulearning_app/pages/welcome/welcome.dart';
 // import 'dart:developer' as devtools show log;
 // import 'package:flutter/foundation.dart';
 
@@ -13,8 +15,12 @@ import 'package:ulearning_app/app_state.dart';
 // }
 
 void main() {
-  runApp(BlocProvider(
-    create: (context) => AppBlocs(),
+  runApp(MultiBlocProvider(
+    providers: [
+      BlocProvider(
+        create: (context) => WelcomeBlocBloc(),
+      )
+    ],
     child: const MyApp(),
   ));
 }
@@ -24,80 +30,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'uLearning App',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+    return ScreenUtilInit(
+      builder: (context, child) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'uLearning App',
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            useMaterial3: true,
+          ),
+          home: const Welcome(),
+          routes: {
+            '/myHomePage': (context) => const HomePage(),
+            '/signIn': (context) => const SignIn(),
+          },
+        );
+      },
     );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    log('build');
-
-    return Scaffold(
-        appBar: AppBar(
-          elevation: 15,
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          title: Text(widget.title),
-        ),
-        body: Center(
-          child: BlocBuilder<AppBlocs, AppStates>(builder: (context, snapshot) {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const Text(
-                  'You have pushed the button this many times:',
-                ),
-                Text(
-                  '${snapshot.counter}',
-                  style: Theme.of(context).textTheme.headlineMedium,
-                ),
-              ],
-            );
-          }),
-        ),
-        floatingActionButton: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            FloatingActionButton(
-              onPressed: () {
-                context.read<AppBlocs>().add(Increment());
-              },
-              tooltip: 'Increment',
-              child: const Icon(Icons.add),
-            ),
-            FloatingActionButton(
-              onPressed: () {
-                context.read<AppBlocs>().add(Decrement());
-              },
-              tooltip: 'Decrement',
-              child: const Icon(Icons.remove),
-            ),
-          ],
-        ));
   }
 }

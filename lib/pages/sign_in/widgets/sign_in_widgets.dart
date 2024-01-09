@@ -28,6 +28,7 @@ AppBar buildAppBar() {
 Widget buildThirdPartyLogin(BuildContext context) {
   return Container(
     margin: EdgeInsets.only(top: 40.h, bottom: 20.h),
+    padding: EdgeInsets.only(left: 25.w, right: 25.w),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
@@ -73,7 +74,7 @@ Widget buildTextField(String hintText, String textType, String iconName) {
     decoration: BoxDecoration(
         // color: Colors.red,
         borderRadius: BorderRadius.circular(15.w),
-        border: Border.all(color: Colors.black)),
+        border: Border.all(color: AppColors.primaryFourthElementText)),
     child: Center(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -103,9 +104,12 @@ Widget buildTextField(String hintText, String textType, String iconName) {
                 helperStyle: TextStyle(
                   color: Colors.grey.withOpacity(0.5),
                 ),
+                hintStyle: TextStyle(
+                  color: AppColors.primarySecondaryElementText,
+                ),
               ),
               style: TextStyle(
-                  color: Colors.black,
+                  color: AppColors.primaryText,
                   fontFamily: 'Avenir',
                   fontWeight: FontWeight.normal,
                   fontSize: 12.sp),
@@ -129,9 +133,9 @@ Widget forgotPassword() {
       child: Text(
         'Forgot Password',
         style: TextStyle(
-          color: Colors.black,
+          color: AppColors.primaryText,
           decoration: TextDecoration.underline,
-          decorationColor: Colors.blue,
+          decorationColor: AppColors.primaryText,
           fontSize: 12.sp,
         ),
       ),
@@ -158,7 +162,7 @@ Widget buildLogInAndRegButton(String buttonName, String buttonType) {
         border: Border.all(
             color: buttonType == "login"
                 ? Colors.black.withOpacity(0.005)
-                : AppColors.primaryFourElementText),
+                : AppColors.primaryFourthElementText),
         boxShadow: [
           BoxShadow(
               spreadRadius: 1,

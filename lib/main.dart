@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ulearning_app/home_page.dart';
+import 'package:ulearning_app/pages/sign_in/bloc/signin_bloc.dart';
 import 'package:ulearning_app/pages/sign_in/sign_in.dart';
 import 'package:ulearning_app/pages/welcome/bloc/welcome_bloc_bloc.dart';
 import 'package:ulearning_app/pages/welcome/welcome.dart';
@@ -19,7 +20,10 @@ void main() {
     providers: [
       BlocProvider(
         create: (context) => WelcomeBlocBloc(),
-      )
+      ),
+      BlocProvider(
+        create: (context) => SigninBloc(),
+      ),
     ],
     child: const MyApp(),
   ));

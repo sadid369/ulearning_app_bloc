@@ -1,8 +1,10 @@
 import 'dart:developer';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ulearning_app/firebase_options.dart';
 import 'package:ulearning_app/home_page.dart';
 import 'package:ulearning_app/pages/sign_in/bloc/signin_bloc.dart';
 import 'package:ulearning_app/pages/sign_in/sign_in.dart';
@@ -15,7 +17,11 @@ import 'package:ulearning_app/pages/welcome/welcome.dart';
 //   void log() => devtools.log(toString());
 // }
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MultiBlocProvider(
     providers: [
       BlocProvider(

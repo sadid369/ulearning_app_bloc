@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ulearning_app/pages/sign_in/bloc/signin_bloc.dart';
 import 'package:ulearning_app/pages/sign_in/widgets/sign_in_widgets.dart';
 
 class SignIn extends StatefulWidget {
@@ -12,45 +14,60 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(bottom: 20.h),
-      color: Colors.white,
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: buildAppBar(),
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              buildThirdPartyLogin(context),
-              Center(child: reusableText('Or use your email account login')),
-              Container(
-                margin: EdgeInsets.only(top: 36.h),
-                padding: EdgeInsets.only(left: 25.w, right: 25.w),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    reusableText('Email'),
-                    SizedBox(
-                      height: 5.h,
+    return BlocBuilder<SigninBloc, SigninState>(
+      builder: (context, state) {
+        return Container(
+          padding: EdgeInsets.only(bottom: 20.h),
+          color: Colors.white,
+          child: Scaffold(
+            backgroundColor: Colors.white,
+            appBar: buildAppBar(),
+            body: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  buildThirdPartyLogin(context),
+                  Center(
+                      child: reusableText('Or use your email account login')),
+                  Container(
+                    margin: EdgeInsets.only(top: 36.h),
+                    padding: EdgeInsets.only(left: 25.w, right: 25.w),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        reusableText('Email'),
+                        SizedBox(
+                          height: 5.h,
+                        ),
+                        buildTextField(
+                            'Enter your email address ', 'email', 'user',
+                            (value) {
+                          context
+                              .read<SigninBloc>()
+                              .add(EmailEvents(email: value));
+                        }),
+                        reusableText('Password'),
+                        SizedBox(
+                          height: 5.h,
+                        ),
+                        buildTextField(
+                            'Enter your Password', 'password', 'lock', (value) {
+                          context
+                              .read<SigninBloc>()
+                              .add(PasswordEvents(password: value));
+                        }),
+                      ],
                     ),
-                    buildTextField(
-                        'Enter your email address ', 'email', 'user'),
-                    reusableText('Password'),
-                    SizedBox(
-                      height: 5.h,
-                    ),
-                    buildTextField('Enter your Password', 'password', 'lock'),
-                  ],
-                ),
+                  ),
+                  forgotPassword(),
+                  buildLogInAndRegButton('Log In', 'login'),
+                  buildLogInAndRegButton('Register', 'register'),
+                ],
               ),
-              forgotPassword(),
-              buildLogInAndRegButton('Log In', 'login'),
-              buildLogInAndRegButton('Register', 'register'),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

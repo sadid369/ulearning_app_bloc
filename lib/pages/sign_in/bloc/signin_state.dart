@@ -18,4 +18,7 @@ class SigninState {
       password: password ?? this.password,
     );
   }
+
+  @override
+  String toString() => 'SigninState(email: $email, password: $password)';
 }

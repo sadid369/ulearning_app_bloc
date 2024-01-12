@@ -2,6 +2,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ulearning_app/common/widgets/flutter_toast.dart';
 import 'package:ulearning_app/pages/sign_in/bloc/signin_bloc.dart';
 import 'dart:developer';
 
@@ -20,10 +21,10 @@ class SignInController {
         String password = state.password;
 
         if (emailAddress.isEmpty) {
-          log('Email Empty');
+          toastInfo(msg: 'you need to fill email address');
         }
         if (password.isEmpty) {
-          log('password is empty');
+          toastInfo(msg: 'you need to fill password');
         }
         try {
           final credential =
@@ -32,33 +33,33 @@ class SignInController {
             password: password,
           );
           if (credential.user == null) {
-            log('user does not exist');
+            toastInfo(msg: 'user does not exist');
           }
           if (!credential.user!.emailVerified) {
-            log('user email not verified');
+            toastInfo(msg: 'user email is not verified');
           }
           var user = credential.user;
           if (user != null) {
-            log('user  exist');
+            toastInfo(msg: 'user  exist');
           } else {
-            log('no user ');
+            toastInfo(msg: 'no user');
           }
         } on FirebaseAuthException catch (f) {
           if (f.code == 'user-not-found') {
-            log('No user found for that email.');
+            toastInfo(msg: 'you need to fill email address');
           } else if (f.code == 'wrong-password') {
-            log('wrong password provided for that user.');
+            toastInfo(msg: 'wrong password provided for that user.');
           } else if (f.code == 'invalid-email') {
-            log('invalid-email');
+            toastInfo(msg: 'invalid-email');
           } else {
-            log('here ${f.code}');
+            toastInfo(msg: 'here ${f.code}');
           }
         } catch (e) {
-          log('another $e');
+          toastInfo(msg: '$e');
         }
       }
     } catch (e) {
-      log('here $e');
+      toastInfo(msg: '$e');
     }
   }
 }

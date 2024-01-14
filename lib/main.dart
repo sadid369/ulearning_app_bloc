@@ -6,6 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ulearning_app/firebase_options.dart';
 import 'package:ulearning_app/home_page.dart';
+import 'package:ulearning_app/pages/bloc_provider.dart';
+import 'package:ulearning_app/pages/register/register.dart';
 import 'package:ulearning_app/pages/sign_in/bloc/signin_bloc.dart';
 import 'package:ulearning_app/pages/sign_in/sign_in.dart';
 import 'package:ulearning_app/pages/welcome/bloc/welcome_bloc_bloc.dart';
@@ -23,14 +25,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(MultiBlocProvider(
-    providers: [
-      BlocProvider(
-        create: (context) => WelcomeBlocBloc(),
-      ),
-      BlocProvider(
-        create: (context) => SigninBloc(),
-      ),
-    ],
+    providers: AppBlocProviders.allBlocProviders,
     child: const MyApp(),
   ));
 }
@@ -53,6 +48,7 @@ class MyApp extends StatelessWidget {
           routes: {
             '/myHomePage': (context) => const HomePage(),
             '/signIn': (context) => const SignIn(),
+            '/register': (context) => const Register(),
           },
         );
       },

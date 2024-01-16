@@ -30,13 +30,10 @@ class _RegisterState extends State<Register> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    height: 20.h,
-                  ),
                   Center(
                       child: reusableText('Enter details below free sign up')),
                   Container(
-                    margin: EdgeInsets.only(top: 36.h),
+                    margin: EdgeInsets.only(top: 10.h),
                     padding: EdgeInsets.only(left: 25.w, right: 25.w),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

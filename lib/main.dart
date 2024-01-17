@@ -4,6 +4,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ulearning_app/common/routes/names.dart';
+import 'package:ulearning_app/common/routes/pages.dart';
 import 'package:ulearning_app/firebase_options.dart';
 import 'package:ulearning_app/home_page.dart';
 import 'package:ulearning_app/pages/application/application_page.dart';
@@ -25,10 +27,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MultiBlocProvider(
-    providers: AppBlocProviders.allBlocProviders,
-    child: const MyApp(),
-  ));
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -36,22 +35,25 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      builder: (context, child) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'uLearning App',
-          theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-            useMaterial3: true,
-          ),
-          home: const ApplicationPage(),
-          routes: {
-            '/signIn': (context) => const SignIn(),
-            '/register': (context) => const Register(),
-          },
-        );
-      },
+    return MultiBlocProvider(
+      providers: [...AppPages.allBlocProviders(context)],
+      child: ScreenUtilInit(
+        builder: (context, child) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'uLearning App',
+            theme: ThemeData(
+              colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+              useMaterial3: true,
+            ),
+            home: const Welcome(),
+            // routes: {
+            //   '/signIn': (context) => const SignIn(),
+            //   '/register': (context) => const Register(),
+            // },
+          );
+        },
+      ),
     );
   }
 }

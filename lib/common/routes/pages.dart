@@ -1,7 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ulearning_app/common/routes/names.dart';
+import 'package:ulearning_app/pages/application/application_page.dart';
+import 'package:ulearning_app/pages/application/bloc/app_bloc.dart';
 import 'package:ulearning_app/pages/register/bloc/register_bloc.dart';
 import 'package:ulearning_app/pages/register/register.dart';
 import 'package:ulearning_app/pages/sign_in/bloc/signin_bloc.dart';
@@ -33,13 +37,13 @@ class AppPages {
           create: (context) => RegisterBloc(),
         ),
       ),
-      // PageEntity(
-      //   routes: AppRoutes.APPLICATION,
-      //   page: const Welcome(),
-      //   bloc: BlocProvider(
-      //     create: (context) => WelcomeBlocBloc(),
-      //   ),
-      // ),
+      PageEntity(
+        routes: AppRoutes.APPLICATION,
+        page: const ApplicationPage(),
+        bloc: BlocProvider(
+          create: (context) => AppBloc(),
+        ),
+      ),
     ];
   }
 
@@ -50,6 +54,23 @@ class AppPages {
       blocProviders.add(bloc.bloc);
     }
     return blocProviders;
+  }
+
+// a modal that covers entries screen as we click on navigator objext
+  static MaterialPageRoute generateRouteSettings(RouteSettings settings) {
+    if (settings.name != null) {
+      //check for route name checking when navigator gets triggered.
+      var result =
+          routes().where((element) => element.routes == settings.name).toList();
+      if (result.isNotEmpty) {
+        log('valid route name : ${settings.name}');
+        return MaterialPageRoute(
+            builder: (_) => result.first.page, settings: settings);
+      }
+    }
+    log('invalid route name : ${settings.name}');
+    return MaterialPageRoute(
+        builder: (context) => const SignIn(), settings: settings);
   }
 }
 

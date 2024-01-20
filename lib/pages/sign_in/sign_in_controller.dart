@@ -44,7 +44,8 @@ class SignInController {
           var user = credential.user;
           if (user != null) {
             toastInfo(msg: 'user  exist');
-            return;
+            Navigator.of(context)
+                .pushNamedAndRemoveUntil('/application', (route) => false);
           } else {
             toastInfo(msg: 'no user');
             return;

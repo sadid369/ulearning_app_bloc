@@ -1,3 +1,4 @@
+import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ulearning_app/common/values/colors.dart';
@@ -132,25 +133,49 @@ Widget sliderView() {
   return Column(
     children: [
       Container(
+        margin: EdgeInsets.only(top: 20.h),
         width: 325.w,
         height: 160.h,
-        decoration: BoxDecoration(),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20.h),
+        ),
         child: PageView(
           children: [
-            Container(
-              width: 325.w,
-              height: 160.h,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(
-                    'assets/icons/art.png',
-                  ),
-                ),
-              ),
-            ),
+            _sliderContainer(path: 'assets/icons/art.png'),
+            _sliderContainer(path: 'assets/icons/Image(1).png'),
+            _sliderContainer(path: 'assets/icons/Image(2).png'),
           ],
         ),
       ),
+      Container(
+        child: DotsIndicator(
+          dotsCount: 3,
+          position: 2,
+          decorator: DotsDecorator(
+              color: AppColors.primaryThirdElementText,
+              activeColor: AppColors.primaryElement,
+              size: Size.square(5.0),
+              activeSize: Size(17, 5),
+              activeShape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5))),
+        ),
+      )
     ],
+  );
+}
+
+Widget _sliderContainer({String path = 'assets/icons/art.png'}) {
+  return Container(
+    width: 325.w,
+    height: 160.h,
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(20.h),
+      image: DecorationImage(
+        fit: BoxFit.fill,
+        image: AssetImage(
+          path,
+        ),
+      ),
+    ),
   );
 }

@@ -28,7 +28,7 @@ AppBar buildAppBar(String type) {
 Widget buildThirdPartyLogin(BuildContext context) {
   return Container(
     margin: EdgeInsets.only(top: 40.h, bottom: 20.h),
-    padding: EdgeInsets.only(left: 25.w, right: 25.w),
+    padding: EdgeInsets.only(left: 50.w, right: 25.w),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
@@ -93,6 +93,7 @@ Widget buildTextField(String hintText, String textType, String iconName,
               onChanged: (value) => func!(value),
               keyboardType: TextInputType.multiline,
               decoration: InputDecoration(
+                contentPadding: EdgeInsets.only(left: 5.w),
                 hintText: hintText,
                 border: const OutlineInputBorder(
                   borderSide: BorderSide.none,

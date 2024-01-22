@@ -73,7 +73,8 @@ class _RegisterState extends State<Register> {
                   // forgotPassword(),
                   Container(
                     margin: EdgeInsets.only(left: 25.w),
-                    child: reusableText('Enter details below free sign up'),
+                    child: reusableText(
+                        'By creating an account you have agree with our term & condition'),
                   ),
                   buildLogInAndRegButton('Sign up', 'login', () {
                     RegisterController(context: context).handleEmailRegister();

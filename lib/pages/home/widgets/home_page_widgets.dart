@@ -126,3 +126,31 @@ Widget searchView() {
     ],
   );
 }
+
+//f
+Widget sliderView() {
+  return Column(
+    children: [
+      Container(
+        width: 325.w,
+        height: 160.h,
+        decoration: BoxDecoration(),
+        child: PageView(
+          children: [
+            Container(
+              width: 325.w,
+              height: 160.h,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(
+                    'assets/icons/art.png',
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    ],
+  );
+}

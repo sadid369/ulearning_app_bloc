@@ -28,6 +28,7 @@ class _HomePageState extends State<HomePage> {
               height: 20.h,
             ),
             searchView(),
+            sliderView(),
           ],
         ),
       ),

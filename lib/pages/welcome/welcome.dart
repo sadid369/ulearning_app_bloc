@@ -7,7 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ulearning_app/common/values/colors.dart';
 import 'package:ulearning_app/common/values/constant.dart';
 import 'package:ulearning_app/global.dart';
-import 'package:ulearning_app/home_page.dart';
+
 import 'package:ulearning_app/pages/welcome/bloc/welcome_bloc_bloc.dart';
 
 class Welcome extends StatefulWidget {

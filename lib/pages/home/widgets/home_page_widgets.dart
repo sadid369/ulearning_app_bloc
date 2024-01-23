@@ -1,7 +1,9 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ulearning_app/common/values/colors.dart';
+import 'package:ulearning_app/pages/home/bloc/home_page_bloc.dart';
 
 AppBar buildAppBar() {
   return AppBar(
@@ -129,7 +131,8 @@ Widget searchView() {
 }
 
 //f
-Widget sliderView() {
+Widget sliderView(
+    {required BuildContext context, required HomePageState state}) {
   return Column(
     children: [
       Container(
@@ -140,6 +143,9 @@ Widget sliderView() {
           borderRadius: BorderRadius.circular(20.h),
         ),
         child: PageView(
+          onPageChanged: (value) {
+            context.read<HomePageBloc>().add(HomePageDots(index: value));
+          },
           children: [
             _sliderContainer(path: 'assets/icons/art.png'),
             _sliderContainer(path: 'assets/icons/Image(1).png'),
@@ -150,7 +156,7 @@ Widget sliderView() {
       Container(
         child: DotsIndicator(
           dotsCount: 3,
-          position: 2,
+          position: state.index,
           decorator: DotsDecorator(
               color: AppColors.primaryThirdElementText,
               activeColor: AppColors.primaryElement,
@@ -176,6 +182,140 @@ Widget _sliderContainer({String path = 'assets/icons/art.png'}) {
           path,
         ),
       ),
+    ),
+  );
+}
+
+Widget menuView() {
+  return Column(
+    children: [
+      Container(
+        width: 325.w,
+        margin: EdgeInsets.only(top: 15.h),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            _reusableText(text: 'Choose your course'),
+            GestureDetector(
+              onTap: () {},
+              child: _reusableText(
+                  text: 'See all',
+                  color: AppColors.primaryThirdElementText,
+                  fontSize: 10),
+            ),
+          ],
+        ),
+      ),
+      Container(
+        margin: EdgeInsets.only(top: 20.h),
+        child: Row(
+          children: [
+            _reusableMenuText(text: 'All'),
+            _reusableMenuText(
+                text: 'Popular',
+                textColor: AppColors.primaryThirdElementText,
+                backgroundColor: Colors.white),
+            _reusableMenuText(
+                text: 'Newest',
+                textColor: AppColors.primaryThirdElementText,
+                backgroundColor: Colors.white),
+          ],
+        ),
+      )
+    ],
+  );
+}
+
+Widget _reusableText({
+  required String text,
+  Color color = AppColors.primaryText,
+  int fontSize = 16,
+  FontWeight fontWeight = FontWeight.bold,
+}) {
+  return Container(
+    child: Text(
+      text,
+      style: TextStyle(
+        color: color,
+        fontWeight: fontWeight,
+        fontSize: fontSize.sp,
+      ),
+    ),
+  );
+}
+
+Widget _reusableMenuText({
+  required String text,
+  Color textColor = AppColors.primaryElementText,
+  Color backgroundColor = AppColors.primaryElement,
+}) {
+  return Container(
+    margin: EdgeInsets.only(right: 20.w),
+    padding: EdgeInsets.only(
+      left: 15.w,
+      right: 15.w,
+      top: 5.h,
+      bottom: 5.h,
+    ),
+    decoration: BoxDecoration(
+      color: backgroundColor,
+      borderRadius: BorderRadius.circular(7.w),
+      border: Border.all(
+        color: backgroundColor,
+      ),
+    ),
+    child: _reusableText(
+      text: text,
+      color: textColor,
+      fontWeight: FontWeight.normal,
+      fontSize: 11,
+    ),
+  );
+}
+
+Widget courseGrid() {
+  return Container(
+    padding: EdgeInsets.all(12.w),
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(15.w),
+      image: const DecorationImage(
+        fit: BoxFit.fill,
+        image: AssetImage(
+          'assets/icons/Image(2).png',
+        ),
+      ),
+    ),
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          maxLines: 1,
+          overflow: TextOverflow.fade,
+          textAlign: TextAlign.left,
+          'Best course for It and Engineering',
+          style: TextStyle(
+            color: AppColors.primaryElementText,
+            fontWeight: FontWeight.bold,
+            fontSize: 11.sp,
+          ),
+        ),
+        SizedBox(
+          height: 5.h,
+        ),
+        Text(
+          maxLines: 1,
+          overflow: TextOverflow.fade,
+          textAlign: TextAlign.left,
+          'Flutter Best Course',
+          style: TextStyle(
+            color: AppColors.primaryFourthElementText,
+            fontWeight: FontWeight.normal,
+            fontSize: 8.sp,
+          ),
+        ),
+      ],
     ),
   );
 }

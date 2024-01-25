@@ -1,8 +1,12 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ulearning_app/common/routes/names.dart';
 import 'package:ulearning_app/common/values/colors.dart';
+import 'package:ulearning_app/common/widgets/base_text_widget.dart';
+import 'package:ulearning_app/pages/application/bloc/app_bloc.dart';
 
 AppBar buildAppBar() {
   return AppBar(
@@ -15,14 +19,7 @@ AppBar buildAppBar() {
             height: 12.h,
             child: Image.asset('assets/icons/menu.png'),
           ),
-          Text(
-            'Profile',
-            style: TextStyle(
-              color: AppColors.primaryText,
-              fontWeight: FontWeight.bold,
-              fontSize: 16.sp,
-            ),
-          ),
+          reusableText(text: "Profile"),
           SizedBox(
             width: 24.w,
             height: 24.h,
@@ -65,13 +62,17 @@ var imagesInfo = <String, String>{
   "Love": "heart(1).png",
   "Reminders": "cube.png"
 };
-Widget buildListView() {
+Widget buildListView(BuildContext context) {
   return Column(
     children: [
       ...List.generate(
         imagesInfo.length,
         (index) => GestureDetector(
-          onTap: () {},
+          onTap: () {
+            if (imagesInfo.keys.elementAt(index).contains('settings')) {
+              Navigator.of(context).pushNamed(AppRoutes.SETTINGS_PAGE);
+            }
+          },
           child: Container(
             margin: EdgeInsets.only(bottom: 15.h),
             child: Row(
